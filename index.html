@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+</head>
+<style>
+    #map {
+        width: 100%;
+        height: 580px;
+        box-shadow: 5px 5px 5px #888;
+    }
+</style>
+
+<body>
+    <div id='map'>
+    </div>
+    <script>
+        var map = L.map('map', {
+            center: [1.615692, -75.615549],
+            zoom: 14,
+            layers: osm,
+            scrollWheelZoom: true,
+        });
+        var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution:
+                '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
+                + 'contributors',
+            maxZoom: 10000
+        }).addTo(map);
+
+        var myIcon = L.icon({
+            iconUrl: ' https://assets.onthehub.com/attachments/15/f956a13b-0f91-e811-8108-000d3af41938/0f8200cc-ad5c-467d-a722-cf135dc00a89.png',
+            iconSize: [30, 30],
+            popupAnchor: [-1, -10]
+        });
+
+        var marker2 = L.marker([1.6205189901930572, -75.6043929537897], { icon: myIcon })
+            .addTo(map)
+            .bindPopup("Universidad de la Amazonia</b>");
+
+        var marker = L.marker([1.6149286656733362, -75.61379186699611], {
+            draggable: true,
+            title: 'pincha aquí'
+        }).addTo(map)
+            .bindPopup('Alcaldia de Florencia')
+            .openPopup();
+
+        var circle = L.circle([1.6149286656733362, -75.61379186699611], 500, {
+            color: 'red',
+            fillColor: '#f03',
+            fillOpacity: 0.5
+        }).addTo(map);
+
+
+        var marker3 = L.marker([1.6149244096229185, -75.61318088110895], {
+            draggable: true,
+            title: 'pincha aquí'
+        }).addTo(map)
+            .bindPopup('Parque Santander')
+            .openPopup();
+
+
+        var polygon = L.polygon([
+            [1.6151184873221682, -75.61351850790251],
+            [1.615267617379824, -75.61300700163675],
+            [1.6147392708405535, -75.61276545701125],
+            [1.6146171261869684, -75.6133153262484]
+        ]).addTo(map)
+            .bindPopup('Poligono Parque Santander');
+
+        var pointA = new L.LatLng(1.612207664389325, -75.60256036110721);
+        var pointB = new L.LatLng(1.6121969398150373, -75.60305388745812);
+        var pointC = new L.LatLng(1.6136769325347984, -75.60207756343918);
+        var pointD = new L.LatLng(1.6140951911723387, -75.60195954621986);
+        var pointE = new L.LatLng(1.6143525810477068, -75.60400875377609);
+        var pointF = new L.LatLng(1.614741876502712, -75.60465335014639);
+        var pointG = new L.LatLng(1.6154035894146221, -75.60410531328621);
+        var pointH = new L.LatLng(1.6188032759236024, -75.6063690976144);
+        var pointI = new L.LatLng(1.6200902219890538, -75.60521038339414);
+
+
+        var latlngs = [pointA, pointB, pointC, pointD, pointE, pointF, pointG, pointH, pointI];
+        var polyline = L.polyline(
+            latlngs, { color: 'red' }
+        )
+            .addTo(map)
+            .bindPopup('Avda. Alcalá de Henares');
+
+        L.tileLayer.wms("http://localhost:8080/geoserver/earth/wms", {
+            layers: ['earth:Ciudades_Mundo', 'earth:Hidrografia_Mundo'],
+            format: 'image/png',
+            transparent: true,
+            attribution: "Weather data © 2012 IEM Nexrad"
+        }).addTo(map);
+        L.control.scale().addTo(map);
+    </script>
+</body>
+
+</html>
